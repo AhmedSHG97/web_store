@@ -2,8 +2,6 @@
 start=`date +%s`
 
 
-
-
 # START Assign permissions to the database volumes --------------------------------------------------------------
 sudo chmod 777 -R store_app_db_mysql
 sudo chmod 777 -R web_store/storage/
@@ -23,6 +21,7 @@ docker exec -it --workdir /var/www/web_store store_app_php composer dump-autoloa
 docker exec -it --workdir /var/www/web_store store_app_php composer install
 docker exec -it --workdir /var/www/web_store store_app_php php artisan key:generate
 docker exec -it --workdir /var/www/web_store store_app_php php artisan migrate:fresh  --seed
+composer require jason-guru/laravel-make-repository --dev
 #END
 end=`date +%s`
 runtime=$((end-start))
