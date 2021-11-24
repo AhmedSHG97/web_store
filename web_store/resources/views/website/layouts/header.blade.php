@@ -9,14 +9,20 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script> --}}
     <!-- Bootstrap Core Css -->
     <link href="{{asset('website')}}/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
     <!-- Waves Effect Css -->
-    <link href="{{asset('website')}}/plugins/node-waves/waves.css" rel="stylesheet" />
+    
+    {{-- Sweet alert --}}
+    <link href="{{asset('website')}}/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="{{asset('website')}}/plugins/sweetalert/sweetalert.min.js"></script>
+    {{-- END Sweet alert --}}
 
+    
     <!-- Animation Css -->
+    <link href="{{asset('website')}}/plugins/node-waves/waves.css" rel="stylesheet" />
     <link href="{{asset('website')}}/plugins/animate-css/animate.css" rel="stylesheet" />
     
     <!-- JQuery DataTable Css -->
@@ -24,7 +30,10 @@
     
     <!-- Morris Chart Css-->
     <link href="{{asset('website')}}/plugins/morrisjs/morris.css" rel="stylesheet" />
-
+  
+    <!-- Bootstrap Select Css -->
+    <link href="{{asset('website')}}/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    
     <!-- Custom Css -->
     <link href="{{asset('website')}}/css/style.css" rel="stylesheet">
 

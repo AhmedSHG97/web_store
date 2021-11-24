@@ -47,4 +47,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function allWithoutAuthed(){
         return User::where('id',"!=",userSession()->id)->get();
     }
+    public function detachAllPermossions($user_id){
+        DB::table('users_permissions')->where('user_id',$user_id)->delete();
+    } 
+    
 }

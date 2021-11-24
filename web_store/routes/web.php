@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Middleware\Authentication;
+use App\Http\Middleware\IsAuthorizedMiddleware;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +33,40 @@ Route::middleware([Authentication::class])->group(function () {
     
     
     /* User routes */
-    Route::post("/user/delete",[UserController::class,"delete"])->name("delete");
+    Route::post("/user/delete",[UserController::class,"delete"])->name("deleteUser");
+    Route::get("/user/edit/{id}",[UserController::class,"edit"]);
+    Route::post("/user/update",[UserController::class,"update"])->name('updateUser');
+    Route::post("user/permissions/update",[UserController::class,"updateUserPermissions"])->name('updateUserPermissions');
     /*END User routes */
+    
+    /* Invenory routes */
+    Route::get("/inventories/all",[InventoryController::class,"all"]);
+    Route::get("/inventory/create",[InventoryController::class,"create"]);
+    Route::post("/inventory/store",[InventoryController::class,"store"])->name('storeInventory');
+    Route::get("/inventory/edit/{id}",[InventoryController::class,"edit"]);
+    Route::post("/inventory/update",[InventoryController::class,"update"])->name("updateInventory");
+    Route::post("/inventory/delete",[InventoryController::class,"delete"])->name("deleteInventory");
+    /* END Invenory routes */
+    
+    /* Category routes */
+    Route::get("/categories/all",[CategoryController::class,"all"]);
+    Route::get("/category/create",[CategoryController::class,"create"]);
+    Route::post("/category/store",[CategoryController::class,"store"])->name('storeCategory');
+    Route::get("/category/edit/{id}",[CategoryController::class,"edit"]);
+    Route::post("/category/update",[CategoryController::class,"update"])->name("updateCategory");
+    Route::post("/category/delete",[CategoryController::class,"delete"])->name("deleteCategory");
+    /* END Category routes */
+
+    /* Product routes */
+    Route::get("/products/all",[ProductController::class,"all"]);
+    Route::get("/product/create",[ProductController::class,"create"]);
+    Route::post("/product/store",[ProductController::class,"store"])->name('storeProduct');
+    Route::get("/product/edit/{id}",[ProductController::class,"edit"]);
+    Route::post("/product/update",[ProductController::class,"update"])->name("updateProduct");
+    Route::post("/product/delete",[ProductController::class,"delete"])->name("deleteProduct");
+    Route::post("/product/filter",[ProductController::class,"productsFilter"])->name("productsFilter");
+    /* END Product routes */
+
 
 });
 

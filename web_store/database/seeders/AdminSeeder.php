@@ -27,7 +27,7 @@ class AdminSeeder extends Seeder
         $role_data = ['slug' => "admin", 'name' => "administrator"];
         $role = Role::create($role_data);
 
-        //attach admin roles
+        //save admin roles
         $admin->giveRoleTo($role->slug);
 
     }

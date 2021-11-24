@@ -5,7 +5,7 @@
         <h2>DASHBOARD</h2>
     </div>
 
-    @role('admin')
+    @role('show-users')
     <!-- Widgets -->
     <div class="row clearfix">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -61,22 +61,10 @@
                     <h2>
                         {{ __("website.title_users") }}
                     </h2>
-                    <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);">Action</a></li>
-                                <li><a href="javascript:void(0);">Another action</a></li>
-                                <li><a href="javascript:void(0);">Something else here</a></li>
-                            </ul>
-                        </li>
-                    </ul>
                 </div>
                 <div class="body">
                     <div class="table-responsive" >
-                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" id = "usersTable">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable" >
                             <thead>
                                 <tr>
                                     <th>{{__("ID")}}</th>
@@ -93,18 +81,8 @@
                                     <th>{{__("website.cloumn_action")}}</th>
                                 </tr>
                             </tfoot>
-                            <tbody id="user-table">
-                                @foreach($users as $user)
-                                    <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>
-                                            <a class="btn btn-info"><i class="material-icons">edit</i><span class="icon-name">{{ __("website.button_edit") }}</span></a>
-                                            <a class="btn btn-danger" onclick='deleteUser("{{ $user->id }}")'><i class="material-icons">delete</i><span class="icon-name">{{ __("website.button_delete") }}</span></a>
-                                        </td> 
-                                    </tr>
-                                @endforeach
+                            <tbody id="work-table">
+                                @include('website.user.components.user_table',['users'=> $users])
                             </tbody>
                         </table>
                     </div>

@@ -10,7 +10,7 @@
             <div class="btn-group user-helper-dropdown">
                 <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                 <ul class="dropdown-menu pull-right">
-                    <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                    <li><a href="{{url('/user/edit/'. userSession()->id)}}"><i class="material-icons">person</i>{{__("website.text_profile")}}</a></li>
                     <li role="seperator" class="divider"></li>
                     <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                     <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
@@ -26,73 +26,67 @@
     <div class="menu">
         <ul class="list">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
+            <li class="{{ activateTap('dashboard') }}">
                 <a href="{{ url('dashboard') }}">
                     <i class="material-icons">home</i>
                     <span>{{ __("website.titel_dashboard") }}</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ activateList('inventories','inventory') }}">
                 <a href="javascript:void(0);" class="menu-toggle">
-                    <i class="material-icons">widgets</i>
-                    <span>Widgets</span>
+                    <i class="material-icons">store</i>
+                    <span>{{ __("website.inventories") }}</span>
                 </a>
                 <ul class="ml-menu">
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <span>Cards</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="pages/widgets/cards/basic.html">Basic</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/cards/colored.html">Colored</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/cards/no-header.html">No Header</a>
-                            </li>
-                        </ul>
+                    @role('show-inventories')
+                    <li class="{{ activateTap('inventories/all', "inventories") }} ">
+                        <a href="{{ url('inventories/all') }}">{{ __("website.my_inventories") }}</a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <span>Infobox</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-1.html">Infobox-1</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-2.html">Infobox-2</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-3.html">Infobox-3</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-4.html">Infobox-4</a>
-                            </li>
-                            <li>
-                                <a href="pages/widgets/infobox/infobox-5.html">Infobox-5</a>
-                            </li>
-                        </ul>
+                    @endrole
+                    @role('modify-inventories')
+
+                    <li class="{{ activateTap('inventory/create') }}">
+                        <a href="{{ url('inventory/create') }}">{{ __("website.create_inventories") }}</a>
                     </li>
+                    @endrole
                 </ul>
             </li>
-            <li>
+            <li class="{{ activateList('categories','category') }}">
                 <a href="javascript:void(0);" class="menu-toggle">
-                    <i class="material-icons">view_list</i>
-                    <span>Tables</span>
+                    <i class="material-icons">store</i>
+                    <span>{{ __("website.categories") }}</span>
                 </a>
                 <ul class="ml-menu">
-                    <li>
-                        <a href="pages/tables/normal-tables.html">Normal Tables</a>
+                    @role('show-categories')
+                    <li class="{{ activateTap('categories/all', "categories") }}">
+                        <a href="{{ url('categories/all') }}">{{ __("website.my_categories") }}</a>
                     </li>
-                    <li>
-                        <a href="pages/tables/jquery-datatable.html">Jquery Datatables</a>
+                    @endrole
+                    @role('modify-categories')
+
+                    <li  class="{{ activateTap('category/create') }}">
+                        <a href="{{ url('category/create') }}">{{ __("website.create_categories") }}</a>
                     </li>
-                    <li>
-                        <a href="pages/tables/editable-table.html">Editable Tables</a>
+                    @endrole
+                </ul>
+            </li>
+            <li class="{{ activateList('products','product') }}">
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">store</i>
+                    <span>{{ __("website.products") }}</span>
+                </a>
+                <ul class="ml-menu">
+                    @role('show-products')
+                    <li class="{{ activateTap('products/all',"products") }}">
+                        <a href="{{ url('products/all') }}">{{ __("website.my_products") }}</a>
                     </li>
+                    @endrole
+                    @role('modify-products')
+
+                    <li class="{{ activateTap('product/create') }}">
+                        <a href="{{ url('product/create') }}">{{ __("website.create_products") }}</a>
+                    </li>
+                    @endrole
                 </ul>
             </li>
         </ul>

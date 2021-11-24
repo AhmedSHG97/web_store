@@ -14,6 +14,7 @@
 <script src="{{asset('website')}}/plugins/node-waves/waves.js"></script>
 <!-- Jquery DataTable Plugin Js -->
 <script src="{{ asset('website') }}/plugins/jquery-datatable/jquery.dataTables.js"></script>
+
 <script src="{{ asset('website') }}/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
 <script src="{{ asset('website') }}/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
 <script src="{{ asset('website') }}/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
@@ -34,19 +35,13 @@
 <!-- ChartJs -->
 <script src="{{asset('website')}}/plugins/chartjs/Chart.bundle.js"></script>
 
-<!-- Flot Charts Plugin Js -->
-{{-- <script src="{{asset('website')}}/plugins/flot-charts/jquery.flot.js"></script>
-<script src="{{asset('website')}}/plugins/flot-charts/jquery.flot.resize.js"></script>
-<script src="{{asset('website')}}/plugins/flot-charts/jquery.flot.pie.js"></script>
-<script src="{{asset('website')}}/plugins/flot-charts/jquery.flot.categories.js"></script>
-<script src="{{asset('website')}}/plugins/flot-charts/jquery.flot.time.js"></script>  --}}
-
 <!-- Sparkline Chart Plugin Js -->
-{{-- <script src="{{asset('website')}}/plugins/jquery-sparkline/jquery.sparkline.js"></script> --}}
+<script src="{{asset('website')}}/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
 <!-- Custom Js -->
 <script src="{{asset('website')}}/js/admin.js"></script>
 <script src="{{ asset('website') }}/js/pages/tables/jquery-datatable.js"></script>
+<script src="{{ asset('website') }}/js/pages/ui/tooltips-popovers.js"></script>
 
 <script src="{{asset('website')}}/js/pages/index.js"></script>
 
