@@ -17,6 +17,9 @@ class CategoryController extends Controller
 
     public function all()
     {
+        if (!userSession()->hasPermissionTo('show-categories') && !userSession()->hasRole('admin')) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         $categories = $this->repository->all();
         return view('website.category.all')->with([
             'title' => __("website.title_categories"),
@@ -26,6 +29,9 @@ class CategoryController extends Controller
 
     public function create()
     {
+        if (!userSession()->hasPermissionTo('modify-categories') && !userSession()->hasRole('admin')) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         return view("website.category.create")->with(['title' => __("website.create_categories")]);
     }
 
@@ -45,6 +51,9 @@ class CategoryController extends Controller
 
     public function edit($category_id)
     {
+        if (!userSession()->hasPermissionTo('modify-categories') && !userSession()->hasRole('admin')) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         $category = $this->repository->getById($category_id);
         $products = $category->products;
         return view('website.category.edit')->with(

@@ -17,7 +17,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(($this->path() == 'user/update' || $this->path() == 'user/permissions/update') && (!(userSession()->hasRole('admin') || Gate::allows('modify-users',userSession()) || userSession()->id == $this->id))){
+        if(($this->path() == 'user/update' || $this->path() == 'user/permissions/update') && (!(userSession()->hasRole('admin') || userSession()->hasPermissionTo('modify-users') || userSession()->id == $this->id))){
             return false;
         }
         return true;

@@ -1,5 +1,5 @@
 @foreach($categories as $category)
-    <tr>
+    <tr class="text-center">
         <td>{{ $category->id }}</td>
         <td>{{ $category->name }}</td>
         <td><img src="{{ url($category->image) }}" style="height:100px; width:100px"></td>

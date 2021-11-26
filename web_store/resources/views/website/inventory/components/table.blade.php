@@ -1,5 +1,5 @@
 @foreach($inventories as $inventory)
-    <tr>
+    <tr class="text-center">
         <td>{{ $inventory->id }}</td>
         <td>{{ $inventory->name }}</td>
         <td>{{ $inventory->address }}</td>

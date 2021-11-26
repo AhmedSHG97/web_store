@@ -6,9 +6,11 @@ use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SafeController;
+use App\Http\Controllers\SafeTransactionsController;
 use App\Http\Middleware\Authentication;
-use App\Http\Middleware\IsAuthorizedMiddleware;
 
 
 /*
@@ -66,6 +68,31 @@ Route::middleware([Authentication::class])->group(function () {
     Route::post("/product/delete",[ProductController::class,"delete"])->name("deleteProduct");
     Route::post("/product/filter",[ProductController::class,"productsFilter"])->name("productsFilter");
     /* END Product routes */
+
+    /* Safe routes */
+    Route::get("/safes/all",[SafeController::class,"all"]);
+    Route::get("/safe/create",[SafeController::class,"create"]);
+    Route::post("/safe/store",[SafeController::class,"store"])->name('storeSafe');
+    Route::get("/safe/edit/{id}",[SafeController::class,"edit"]);
+    Route::post("/safe/update",[SafeController::class,"update"])->name("updateSafe");
+    Route::post("/safe/delete",[SafeController::class,"delete"])->name("deleteSafe");
+    /* END Safe routes */
+
+    /* Invoice routes */
+    Route::get("/invoices/all",[InvoiceController::class,"all"]);
+    Route::get("/invoice/create",[InvoiceController::class,"create"]);
+    Route::post("/invoice/store",[InvoiceController::class,"store"])->name('storeInvoice');
+    Route::post("/invoice/products/store",[InvoiceController::class,"storeInvoiceProducts"])->name('storeInvoiceProducts');
+    Route::post("/invoice/delete",[InvoiceController::class,"delete"])->name("deleteInvoice");
+    Route::get("/invoice/print/{id}",[InvoiceController::class,"print"]);
+    /* END Invoice routes */
+
+    /*Transactions */
+    Route::post("/safe/transaction/store",[SafeTransactionsController::class,"store"])->name('storeTransaction');
+    Route::post("/safe/transaction/delete",[SafeTransactionsController::class,"delete"])->name("deleteTransaction");
+    /*END Transactions */
+    
+    
 
 
 });

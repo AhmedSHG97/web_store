@@ -19,6 +19,9 @@ class InventoryController extends Controller
 
     public function all()
     {
+        if (!userSession()->hasPermissionTo('show-inventories') && !userSession()->hasRole('admin')) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         $inventories = $this->repository->all();
         return view('website.inventory.all')->with([
             'title' => __("website.title_inventories"),
@@ -28,7 +31,7 @@ class InventoryController extends Controller
 
     public function create()
     {
-        if (!userSession()->hasPermissionTo('modify-inventoreis') && !userSession()->hasRole('admin')) {
+        if (!(userSession()->hasPermissionTo('modify-inventories') || userSession()->hasRole('admin'))) {
             return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
         }
         return view("website.inventory.create")->with(['title' => __("website.create_inventories")]);
@@ -50,7 +53,7 @@ class InventoryController extends Controller
 
     public function edit($inventory_id)
     {
-        if (!userSession()->hasPermissionTo('modify-inventoreis') && !userSession()->hasRole('admin')) {
+        if (!userSession()->hasPermissionTo('modify-inventories') && !userSession()->hasRole('admin')) {
             return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
         }
         $inventory = $this->repository->getById($inventory_id);

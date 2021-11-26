@@ -22,6 +22,9 @@ class ProductController extends Controller
 
     public function all(Request $request)
     {
+        if (!userSession()->hasPermissionTo('show-products') && !userSession()->hasRole('admin')) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         if($request->has("from")){
             $products = $this->repository->where('quantity',$request->from,">=")->where('quantity',$request->to,"<=")->get();
         }else{
@@ -35,6 +38,9 @@ class ProductController extends Controller
 
     public function create()
     {
+        if (!userSession()->hasPermissionTo('modify-products') && !userSession()->hasRole('admin')) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         if (!userSession()->hasPermissionTo('modify-products') && !userSession()->hasRole('admin')) {
             return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
         }

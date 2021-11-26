@@ -19,6 +19,9 @@ class UserController extends Controller
 
     public function edit($user_id)
     {
+        if (!userSession()->hasPermissionTo('modify-users') && !userSession()->hasRole('admin') && !userSession()->id == $user_id) {
+            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
+        }
         $user = $this->repository->getById($user_id);
         $permissions = $this->permissionRepository->all();
         $user_permissions = $user->permissions;
@@ -44,31 +47,19 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-        if (!Gate::allows("modify-users")) {
-            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
-        }
         $this->repository->deleteById($request->id);
         $users = $this->repository->allWithoutAuthed();
         return view("website.user.components.user_table")->with(['users' => $users]);
     }
 
-    public function updateUserPermissions(UserRequest $request)
+    public function updateUserPermissions(Request $request)
     {
-        if (session()->has('is_authorized')) {
-            return redirect()->back()->withErrors(['message' => __("auth.text_no_permission")]);
-        }
-        if (session()->has('validation_message')) {
-            return redirect()->back()->withErrors(['message' => session("validation_message")]);
-        }
         $user = $this->repository->getById($request->id);
-        $this->repository->detachAllPermossions($user->id);
-        if ($request->has('allowed')) {
-            foreach ($request->allowed as $slug) {
-                if (!$user->hasPermissionTo($slug)) {
-                    $user->givePermissionTo($slug);
-                }
-            }
+        if ($request->status == "true") {
+            $user->givePermissionTo($request->permission);
+        }else{
+            $user->withdrawPermissionTo($request->permission);
         }
-        return redirect()->back()->with(['success' => __("website.info_data_updated_success")]);
+        return true;
     }
 }

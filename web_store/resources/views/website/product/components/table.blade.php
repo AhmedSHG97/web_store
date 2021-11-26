@@ -1,12 +1,14 @@
 @foreach($products as $product)
-    <tr>
+    <tr class="text-center">
         <td>{{ $product->id }}</td>
         <td>{{ $product->name }}</td>
+        <td>{{ $product->cost_price }}</td>
+        <td>{{ $product->sales_price }}</td>
         @if($product->quantity > 30)
         <td class=" btn-success">{{ $product->quantity }}</td>
-        @elseif($product->quantity < 30 && $product->quantity > 10)
+        @elseif($product->quantity <= 30 && $product->quantity > 10)
         <td class=" btn-warning">{{ $product->quantity }}</td>
-        @elseif($product->quantity < 10)
+        @elseif($product->quantity <= 10)
         <td class=" btn-danger">{{ $product->quantity }}</td>
         @endif
         @if(count($product->inventories) > 0)

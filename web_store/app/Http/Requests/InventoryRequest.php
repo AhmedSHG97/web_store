@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Gate;
 
 class InventoryRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class InventoryRequest extends FormRequest
      */
     public function authorize()
     {
-        if (($this->path() == 'inventory/store' || $this->path() == 'inventory/update') && (!(userSession()->hasRole('admin') || Gate::allows('modify-inventories', userSession())))) {
+        if (($this->path() == 'inventory/store' || $this->path() == 'inventory/update') && (!(userSession()->hasRole('admin') || userSession()->hasPermissionTo('modify-inventories')))) {
             return false;
         }
         return true;

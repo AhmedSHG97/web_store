@@ -19,6 +19,11 @@ class Inventory extends Model
         return $this->belongsToMany(Product::class,"products_inventories");
     }
     public function getCreditAttribute(){
-        return $this->products->sum('cost_price');
+        $products =  $this->products;
+        $credit = 0;
+        foreach ($products as $product){
+            $credit+= $product->cost_price * $product->quantity;
+        }
+        return $credit;
     }
 }

@@ -11,10 +11,16 @@ use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Inventory\InventoryRepositoryInterface;
 use App\Repositories\Inventory\InventoryRepository;
+use App\Repositories\Invoice\InvoiceRepository;
+use App\Repositories\Invoice\InvoiceRepositoryInterface;
 use App\Repositories\Permission\PermissionRepository;
 use App\Repositories\Permission\PermissionsRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Safe\SafeRepository;
+use App\Repositories\Safe\SafeRepositoryInterface;
+use App\Repositories\SafeTransactions\SafeTransactionRepository;
+use App\Repositories\SafeTransactions\SafeTransactionRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -58,5 +64,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PermissionsRepositoryInterface::class, PermissionRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(SafeRepositoryInterface::class, SafeRepository::class);
+        $this->app->bind(SafeTransactionRepositoryInterface::class, SafeTransactionRepository::class);
+        $this->app->bind(InvoiceRepositoryInterface::class, InvoiceRepository::class);
     }
 }

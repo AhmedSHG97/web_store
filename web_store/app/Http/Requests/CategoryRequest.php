@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Gate;
 
 class CategoryRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        if (($this->path() == 'category/store' || $this->path() == 'category/update') && (!(userSession()->hasRole('admin') || Gate::allows('modify-categories', userSession())))) {
+        if (($this->path() == 'category/store' || $this->path() == 'category/update') && (!(userSession()->hasRole('admin') || userSession()->hasPermissionTo('modify-categories')))) {
             return false;
         }
         return true;

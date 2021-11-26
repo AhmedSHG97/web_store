@@ -16,7 +16,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        if (($this->path() == 'product/store' || $this->path() == 'product/update') && (!(userSession()->hasRole('admin') || Gate::allows('modify-products', userSession())))) {
+        if (($this->path() == 'product/store' || $this->path() == 'product/update') && (!(userSession()->hasRole('admin') || userSession()->hasPermissionTo('modify-products')))) {
             return false;
         }
         return true;
@@ -70,6 +70,17 @@ class ProductRequest extends FormRequest
             "name.max" =>  __("auth.name_max"),
             "image.mimes" => __("website.image_mimes"),
             "image.required" => __("website.image_required"),
+            "description.required" => __("website.description_required"),
+            "description.min" => __("website.description_min"),
+            "category_id.required" => __("website.category_required"),
+            "category_id.exists" => __("website.category_exists"),
+            "inventories.array" => __("website.inventory_array"),
+            "cost_price.required" => __("website.cost_price_required"),
+            "cost_price.min" => __("website.cost_price_min"),
+            "sales_price.required" => __("website.sales_price_required"),
+            "sales_price.min" => __("website.sales_price_min"),
+            "quantity.required" => __("website.quantity_required"),
+            "quantity.min" => __("website.quantity_min"),
         ];
     }
     protected function failedAuthorization()

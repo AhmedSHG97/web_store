@@ -61,6 +61,8 @@
                                 <tr>
                                     <th>{{__("ID")}}</th>
                                     <th>{{__("website.column_name")}}</th>
+                                    <th>{{__("website.column_cost_price")}}</th>
+                                    <th>{{__("website.column_sale_price")}}</th>
                                     <th>{{__("website.column_quantity")}}</th>
                                     <th>{{__("website.column_inventories")}}</th>
                                     <th>{{__("website.column_category")}}</th>
@@ -72,6 +74,8 @@
                                 <tr>
                                     <th>{{__("ID")}}</th>
                                     <th>{{__("website.column_name")}}</th>
+                                    <th>{{__("website.column_cost_price")}}</th>
+                                    <th>{{__("website.column_sale_price")}}</th>
                                     <th>{{__("website.column_quantity")}}</th>
                                     <th>{{__("website.column_inventories")}}</th>
                                     <th>{{__("website.column_image")}}</th>
