@@ -20,6 +20,18 @@
                             <label class="form-label">{{ __("website.text_invoice_to") }}</label>
                         </div>
                     </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="invoice_owner_address" value="{{ old('invoice_owner_address') }}" id="invoice_owner_address" class="form-control">
+                            <label class="form-label">{{ __("website.text_invoice_owner_address") }}</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" name="invoice_owner_phone" value="{{ old('invoice_owner_phone') }}" id="invoice_owner_phone" class="form-control">
+                            <label class="form-label">{{ __("website.text_invoice_owner_phone") }}</label>
+                        </div>
+                    </div>
                     <br>
                     <center><button type="submit" class="btn btn-primary m-t-15 waves-effect ">{{ __("website.create") }}</button></center>
                 </form>

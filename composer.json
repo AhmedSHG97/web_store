@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "jason-guru/laravel-make-repository": "^0.0.3"
+    }
+}

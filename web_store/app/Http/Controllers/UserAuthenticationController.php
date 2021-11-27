@@ -26,7 +26,7 @@ class UserAuthenticationController extends Controller
             'email' => __("auth.text_email"), 
             "password" => __("auth.text_password"),
             "start_exploring" => __("auth.text_start_session"),
-            "app_name" => config('app.name'),
+            "app_name" => appSettings()->app_name,
         ]);
     }
     //Perform login
@@ -61,7 +61,7 @@ class UserAuthenticationController extends Controller
         }
     }
     public function forgot(){
-        return view('website.forgot_password')->with(['title'=>__("auth.text_forgot_password"), "app_name" => config('app.name') ]);
+        return view('website.forgot_password')->with(['title'=>__("auth.text_forgot_password"), "app_name" => appSettings()->app_name ]);
     }
 
     public function resetPassword(UserAuthenticationRequest $request){

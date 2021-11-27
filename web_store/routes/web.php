@@ -91,6 +91,10 @@ Route::middleware([Authentication::class])->group(function () {
     Route::post("/safe/transaction/store",[SafeTransactionsController::class,"store"])->name('storeTransaction');
     Route::post("/safe/transaction/delete",[SafeTransactionsController::class,"delete"])->name("deleteTransaction");
     /*END Transactions */
+
+    //settings
+    Route::get('settings/edit',[DashboardController::class,'editSettings']);
+    Route::post('settings/update',[DashboardController::class,'updateSettings'])->name('updateSettings');
     
     
 

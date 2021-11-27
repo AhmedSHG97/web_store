@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Settings;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,3 +44,9 @@ if (!function_exists("activateList")) {
         }
     }
 }
+if (!function_exists("appSettings")) {
+    function appSettings(){
+        return Settings::orderBy('id','desc')->first();
+    }
+}
+

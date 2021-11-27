@@ -18,6 +18,8 @@ class CreateInvoicesTable extends Migration
             $table->double('total', 8, 2);
             $table->double('subtotal', 8, 2);
             $table->string('invoice_to');
+            $table->string('invoice_owner_address');
+            $table->string('invoice_owner_phone');
             $table->foreignId('user_id')->constrained()->onDelete("cascade");
             $table->timestamps();
         });

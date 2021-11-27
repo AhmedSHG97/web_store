@@ -363,7 +363,7 @@ h2, h3, h4, h5, h6, .title {
 		</dl>
 		
 		<div class="invoice-intro">
-			<h1>{{ config('app.name') }}</h1>
+			<h1>{{ appSettings()->app_name }}</h1>
 			<p>نحن نعمل من أجل ثقتكم</p>
 		</div>
 		
@@ -376,23 +376,29 @@ h2, h3, h4, h5, h6, .title {
 		<div class="invoice-to">
 			<h2>فاتوره إلى:</h2>
 			<div id="hcard-Hiram-Roth" class="vcard">
-				<div class="org">{{$invoice->invoice_to}}</div>
+				<div class="adr">
+					<div class="street-address">{{$invoice->invoice_to}}</div>
+				</div>
+				<div class="adr">
+					<div class="street-address">{{$invoice->invoice_owner_address}}</div>
+				</div>
+
+				<div class="tel">{{$invoice->invoice_owner_phone}}</div>
 			</div><!-- e: vcard -->
 		</div><!-- e invoice-to -->
 
 
-		<div class="invoice-from">
+		<div class="invoice-meta">
 			<h2>فاتوره من:</h2>
 			<div id="hcard-Admiral-Valdore" class="vcard">
-				<div class="org">{{ config('app.name') }}</div>
+				<div class="org">{{ appSettings()->app_name }}</div>
+				<div class="adr">
+					<div class="street-address">{{ appSettings()->address }}</div>
+				</div>
+
+				<div class="tel">{{ appSettings()->app_phone }}</div>
 			</div><!-- e: vcard -->
 		</div><!-- e invoice-from -->
-
-
-		<div class="invoice-status" >
-			<h3>حالة الفاتورة</h3>
-			<strong >الفاتورة <em>غير</em> <em>مدفوعة</em></strong>
-		</div><!-- e: invoice-status -->
 
 	</section><!-- e: invoice partis -->
 

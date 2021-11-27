@@ -31,6 +31,8 @@ class InvoiceRequest extends FormRequest
         if ($this->path() == 'invoice/store') {
             return [
                 'invoice_to' => "required|string|min:3",
+                'invoice_owner_address' => "required|string|min:3",
+                'invoice_owner_phone' => "required|string|min:11",
             ];
         }
     }
@@ -43,6 +45,10 @@ class InvoiceRequest extends FormRequest
         return [
             "invoice_to.required" => __("website.invoice_to_required"),
             "invoice_to.min" =>  __("website.invoice_to_min"),
+            "invoice_owner_address.required" => __("website.invoice_owner_address_required"),
+            "invoice_owner_address.min" =>  __("website.invoice_owner_address_min"),
+            "invoice_owner_phone.required" => __("website.invoice_owner_phone_required"),
+            "invoice_owner_phone.min" =>  __("website.invoice_owner_phone_min"),
         ];
     }
     protected function failedAuthorization()

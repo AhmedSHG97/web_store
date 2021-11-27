@@ -154,7 +154,6 @@
         if(quantity == ''){
             swal("{{ __('website.quantity_required') }}", "", "error");
         }else if(parseInt(total_quantity) < parseInt(quantity)){
-            alert(total_quantity);
             swal("{{ __('website.quantity_not_validated') }}", "", "error");
         }else{
             $.ajax({

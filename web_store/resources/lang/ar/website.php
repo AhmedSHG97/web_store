@@ -184,7 +184,40 @@ return[
     "quantity_required" => "من فضلك أدخل الكمية المراد بيعها",
     "quantity_not_validated" => "عذرا, فالكمية المطلوبة أكبر من الكمية الموجودة",
     
+    //SETTINGS
     
+    //common
+    "settings" => "الإعدادات",
+
+    //text
+    "text_app_name" => "اسم التطبيق",
+    "text_app_phone" => "رقم الهاتف الخاص بكم",
+    "text_address" => "عنوانكم",
+    
+    //validation
+    "invoice_owner_address_required" => "العنوان مطلوب",
+    "invoice_owner_address_min" => "العنوان يجب ان يتكون من 3 حروف أو أكثر",
+    "invoice_owner_phone_required" => "رقم هاتف صاحب الفاتورة  مطلوب",
+    "invoice_owner_phone_min" => "رقم هاتف صاحب الفاتورة يجب ان بتكون من 11 رقم او أكثر",
+    "address_required" => "العنوان مطلوب",
+    "address_min" => "العنوان يجب ان يتكون من 3 حروف أو أكثر",
+    "app_phone_required" => "رقم الهاتف الفاتورة  مطلوب",
+    "app_phone_min" => "رقم الهاتف يجب ان بتكون من 11 رقم او أكثر",
+    "quantity_validation_error" => "عذرا فالكمية التي طابتها اكثر من المتاح",
+    
+    //title
+    "title_settings" => "الإعدادات",
+    
+    //info
+    "settings_updated_successfully" => "تم تعديل الإعدادات بنجاح",
+    "text_invoice_owner_address" => "عنوان صاحب الفاتورة",
+    "text_invoice_owner_phone" => "رقم هاتف صاحب الفاتورة",
+    
+    
+    
+
+    
+
 
 
 ];

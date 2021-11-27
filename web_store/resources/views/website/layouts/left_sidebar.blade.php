@@ -11,10 +11,10 @@
                 <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                 <ul class="dropdown-menu pull-right">
                     <li><a href="{{url('/user/edit/'. userSession()->id)}}"><i class="material-icons">person</i>{{__("website.text_profile")}}</a></li>
+                    @role('modify-settings')
                     <li role="seperator" class="divider"></li>
-                    <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                    <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                    <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                    <li><a href="{{ url('settings/edit') }}"><i class="material-icons">settings</i>{{__('website.settings')}}</a></li>
+                    @endrole
                     <li role="seperator" class="divider"></li>
                     <li><a href="{{ route('logout') }}"><i class="material-icons">input</i>{{ __("website.button_logout") }}</a></li>
                 </ul>
