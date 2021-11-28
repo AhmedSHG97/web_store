@@ -23,11 +23,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function assignInventories($product,$inventory_ids){
         foreach($inventory_ids as $key => $quantity){
             // $product->inventories()->save(Inventory::find($inventory_id));
-            DB::table('products_inventories')->insertGetId([
-                'product_id' => $product->id,
-                'inventory_id' => $key,
-                'quantity' => $quantity,
-            ]);
+            if($quantity != null){
+                DB::table('products_inventories')->insertGetId([
+                    'product_id' => $product->id,
+                    'inventory_id' => $key,
+                    'quantity' => $quantity,
+                ]);
+            }
+            
         }
         
         return $product;

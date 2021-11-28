@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->text('description');
             $table->foreignId('category_id')->constrained()->onDelete("cascade");
-            $table->double('cost_price', 8, 2);
-            $table->double('sales_price', 8, 2);
+            $table->double('cost_price');
+            $table->double('sales_price');
             $table->integer('quantity');
             $table->timestamps();
         });

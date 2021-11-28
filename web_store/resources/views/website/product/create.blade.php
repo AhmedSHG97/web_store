@@ -26,11 +26,11 @@
                             <label class="form-label">{{ __("website.text_description") }}</label>
                         </div>
                     </div>
-                    <div class="form-group " id="inventories">
+                    <div class="form-group form-float" id="inventories">
                         <label class="card-inside-title">{{ __("website.inventories") }}</label>
                         @foreach ($inventories as $inventory )
                             <div class="form-line focused">
-                                <input type="number" oninput="addToQuantity()" name="inventories[{{ $inventory->id }}]" placeholder="الكمية داخل المخزن" value='{{ old("inventories.$inventory->id") }}' min="0" id="input-quantity_in_inventory{{ $inventory->id }}" class="form-control">
+                                <input type="number" oninput="addToQuantity()" name="inventories[{{ $inventory->id }}]" placeholder="                          الكمية داخل المخزن" value='{{ old("inventories.$inventory->id") }}' min="0" id="input-quantity_in_inventory{{ $inventory->id }}" class="form-control">
                                 <label class="form-label ">{{ $inventory->name }}</label>
                             </div>
                             <br>

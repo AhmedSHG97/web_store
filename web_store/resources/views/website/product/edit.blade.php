@@ -43,7 +43,7 @@
                         @endforeach
                         @foreach ($inventories as $key => $inventory )
                         <div class="form-line ">
-                            <input type="number" oninput="addToQuantity()" name="inventories[{{ $inventory->id }}]" placeholder="الكمية داخل المخزن" value='{{ old("inventories.$inventory->id",$inventory->quantity) }}' min="0" id="input-quantity_in_inventory{{ $inventory->id }}" class="form-control">
+                            <input type="number" oninput="addToQuantity()" name="inventories[{{ $inventory->id }}]" placeholder="                            الكمية داخل المخزن" value='{{ old("inventories.$inventory->id",$inventory->quantity) }}' min="0" id="input-quantity_in_inventory{{ $inventory->id }}" class="form-control">
                             <label class="form-label ">{{ $inventory->name }}</label>
                         </div>
                         <br>

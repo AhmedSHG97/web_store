@@ -75,16 +75,46 @@ class InvoiceController extends Controller
             'subtotal' => $subtotal,
         ]));
         foreach ($invoiceProducts as $product) {
+            $product_info = $this->productRepository->getById($product->product_id);
             DB::table('invoice_products')->insertGetId([
                 'product_id' => $product->product_id,
                 'sales_price' => $product->sales_price,
                 'quantity' => $product->quantity,
                 'invoice_id' => $invoice->id,
             ]);
-            DB::table('products_inventories')
-            ->where('product_id',$product->product_id)
-            ->where('inventory_id',$product->inventory_id)
-            ->decrement('quantity', $product->quantity);
+            $remaining_quantity = 0;
+            foreach ($product_info->inventories as $inventory) {
+                if ($product->inventory_id == $inventory->id) {
+                    if ($product->quantity < $inventory->quantity) {
+                        DB::table('products_inventories')
+                            ->where('product_id', $product->product_id)
+                            ->where('inventory_id', $product->inventory_id)
+                            ->decrement('quantity', $product->quantity);
+                    } else {
+                        $remaining_quantity = $product->quantity - $inventory->quantity;
+                        DB::table('products_inventories')
+                            ->where('product_id', $product->product_id)
+                            ->where('inventory_id', $product->inventory_id)
+                            ->decrement('quantity', $inventory->quantity);
+                    }
+                    if ($remaining_quantity > 0) {
+                        foreach ($product_info->inventories as $antoher_inventory) {
+                            if ($inventory->id != $antoher_inventory->id) {
+                                $another_inventory_product = DB::table('products_inventories')
+                                ->where('product_id', $product->product_id)
+                                ->where('inventory_id', $antoher_inventory->id)->get();
+                                if (count($another_inventory_product) > 0) {
+                                    DB::table('products_inventories')
+                                        ->where('product_id', $product->product_id)
+                                        ->where('inventory_id',  $antoher_inventory->id)
+                                        ->decrement('quantity', $remaining_quantity);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
         return redirect()->back()->with(['success' => __("website.info_invoice_created_success")]);
     }

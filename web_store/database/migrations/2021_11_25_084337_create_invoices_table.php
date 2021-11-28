@@ -15,8 +15,8 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->double('total', 8, 2);
-            $table->double('subtotal', 8, 2);
+            $table->double('total');
+            $table->double('subtotal');
             $table->string('invoice_to');
             $table->string('invoice_owner_address');
             $table->string('invoice_owner_phone');

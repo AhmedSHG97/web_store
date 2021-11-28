@@ -15,7 +15,9 @@
         <td>
             <select name="inventory_id"  class="form-control ">
                 @foreach ($product->inventories as $inventory )
+                @if($inventory->quantity != 0 || $inventory->quantity != null)
                 <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
+                @endif
                 @endforeach
                 
             </select>
