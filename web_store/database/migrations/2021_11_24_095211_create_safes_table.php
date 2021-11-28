@@ -16,7 +16,7 @@ class CreateSafesTable extends Migration
         Schema::create('safes', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->double('total_amount', 8, 2);
+            $table->double('total_amount');
             $table->timestamps();
         });
     }

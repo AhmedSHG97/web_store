@@ -212,6 +212,7 @@ return[
     "settings_updated_successfully" => "تم تعديل الإعدادات بنجاح",
     "text_invoice_owner_address" => "عنوان صاحب الفاتورة",
     "text_invoice_owner_phone" => "رقم هاتف صاحب الفاتورة",
+    "select_inventory" => "اختار مخزن",
     
     
     

@@ -127,6 +127,9 @@
                             <label class="form-label">{{ __("website.column_quantity") }}</label>
                         </div>
                     </div>
+                    <div class="form-group" id="product_inventories">
+                        <label class="card-inside-title">{{ __("website.select_inventory") }}</label>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="clearInputs()" class="btn btn-secondary" data-dismiss="modal">{{ __("website.close") }}</button>

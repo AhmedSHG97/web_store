@@ -18,6 +18,7 @@ class CreateInvoiceProductsDetailsTable extends Migration
             $table->bigInteger('product_id');
             $table->integer('quantity');
             $table->double('sales_price');
+            $table->integer('inventory_id');
             $table->timestamps();
         });
     }

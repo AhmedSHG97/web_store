@@ -21,7 +21,7 @@ class Product extends Model
         "quantity",
     ];
     public function inventories(){
-        return $this->belongsToMany(Inventory::class,"products_inventories");
+        return $this->belongsToMany(Inventory::class,"products_inventories")->select(array('inventory_id','product_id','id','address','name','image','quantity'));
     }
     public function category(){
         return $this->belongsTo(Category::class);

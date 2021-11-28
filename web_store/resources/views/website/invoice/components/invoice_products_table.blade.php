@@ -18,7 +18,7 @@
         @endif
         @if(count($product->inventories) > 0)
         <td>
-            <select name="category_id" class="form-control ">
+            <select name="category_id" id ="inventory_{{$product->id}}" class="form-control ">
                 @foreach ($product->inventories as $inventory )
                 <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                 @endforeach

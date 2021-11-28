@@ -7,14 +7,16 @@ use App\Http\Requests\SafeRequest;
 use Illuminate\Http\Request;
 use App\Repositories\Invoice\InvoiceRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Inventory\InventoryRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
-    public function __construct(InvoiceRepositoryInterface $invoiceRepository, ProductRepositoryInterface $productRepository)
+    public function __construct(InvoiceRepositoryInterface $invoiceRepository, InventoryRepositoryInterface $inventoryRepository, ProductRepositoryInterface $productRepository)
     {
         $this->repository = $invoiceRepository;
         $this->productRepository = $productRepository;
+        $this->inventoryRepository = $inventoryRepository;
     }
 
     public function all()
@@ -79,6 +81,10 @@ class InvoiceController extends Controller
                 'quantity' => $product->quantity,
                 'invoice_id' => $invoice->id,
             ]);
+            DB::table('products_inventories')
+            ->where('product_id',$product->product_id)
+            ->where('inventory_id',$product->inventory_id)
+            ->decrement('quantity', $product->quantity);
         }
         return redirect()->back()->with(['success' => __("website.info_invoice_created_success")]);
     }
@@ -89,6 +95,7 @@ class InvoiceController extends Controller
                 'product_id' => $request->product_id,
                 'sales_price' => $request->price,
                 'quantity' => $request->quantity,
+                'inventory_id' => $request->inventory_id,
             ]);
         } else if ($request->status == "false") {
             DB::table('invoice_products_details')->where('product_id', $request->producr_id)->delete();

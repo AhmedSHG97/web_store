@@ -27,9 +27,31 @@
                             <label class="form-label">{{ __("website.text_description") }}</label>
                         </div>
                     </div>
+                    <div class="form-group form-float " id="inventories">
+                        <label class="card-inside-title">{{ __("website.inventories") }}</label>
+                        @foreach ($inventories as $key => $inventory )
+                        @foreach($product->inventories as $product_inventory)
+                            @if($inventory->id == $product_inventory->inventory_id)
+                            <div class="form-line ">
+                                <input type="number" oninput="addToQuantity()" name="inventories[{{ $inventory->id }}]" placeholder="الكمية داخل المخزن" value='{{ old("inventories.$inventory->id",$product_inventory->quantity) }}' min="0" id="input-quantity_in_inventory{{ $inventory->id }}" class="form-control">
+                                <label class="form-label ">{{ $inventory->name }}</label>
+                            </div>
+                            <br>
+                            <?php unset($inventories[$key]) ?>
+                            @endif
+                        @endforeach
+                        @endforeach
+                        @foreach ($inventories as $key => $inventory )
+                        <div class="form-line ">
+                            <input type="number" oninput="addToQuantity()" name="inventories[{{ $inventory->id }}]" placeholder="الكمية داخل المخزن" value='{{ old("inventories.$inventory->id",$inventory->quantity) }}' min="0" id="input-quantity_in_inventory{{ $inventory->id }}" class="form-control">
+                            <label class="form-label ">{{ $inventory->name }}</label>
+                        </div>
+                        <br>
+                        @endforeach
+                    </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="number" name="quantity" value="{{ old('quantity',$product->quantity) }}" min="0" id="quantity" class="form-control">
+                            <input type="number" name="quantity" value="{{ old('quantity',$product->quantity) }}" min="0" id="input-quantity" class="form-control">
                             <label class="form-label">{{ __("website.text_quantity") }}</label>
                         </div>
                     </div>
@@ -64,20 +86,6 @@
                             @endforeach
                             
                         </select>
-                    </div>
-                    <div class="form-group form-float">
-                        <label class="card-inside-title">{{ __("website.inventories") }}</label>
-                        @foreach ($inventories as $inventory )
-                            @if( in_array($inventory->id , old('inventories',$product->inventories_ids)) )
-                                <input type="checkbox" name="inventories[]" id="basic_checkbox_{{ $inventory->id }}" value="{{ $inventory->id }}" class="filled-in" checked />
-                                <label for="basic_checkbox_{{ $inventory->id }}">{{ $inventory->name }}</label>
-                                <br>
-                            @else
-                                <input type="checkbox" name="inventories[]" id="basic_checkbox_{{ $inventory->id }}" value="{{ $inventory->id }}" class="filled-in"  />
-                                    <label for="basic_checkbox_{{ $inventory->id }}">{{ $inventory->name }}</label>
-                                    <br>
-                                @endif
-                        @endforeach
                     </div>
                     <br>
                     <center><button type="submit" class="btn btn-primary m-t-15 waves-effect ">{{ __("website.button_update") }}</button></center>
