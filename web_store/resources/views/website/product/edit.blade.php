@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="number" name="quantity" value="{{ old('quantity',$product->quantity) }}" min="0" id="input-quantity" class="form-control">
+                            <input type="number" name="quantity" value="{{ old('quantity',$product->quantity) }}" min="0" id="input-quantity" class="form-control" readonly>
                             <label class="form-label">{{ __("website.text_quantity") }}</label>
                         </div>
                     </div>

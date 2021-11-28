@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line focused">
-                            <input type="number" name="quantity" value="{{ old('quantity') }}" min="0" id="input-quantity" class="form-control">
+                            <input type="number" name="quantity" value="{{ old('quantity') }}" min="0" id="input-quantity" class="form-control" readonly>
                             <label class="form-label ">{{ __("website.text_quantity") }}</label>
                         </div>
                     </div>
