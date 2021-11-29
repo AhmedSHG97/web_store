@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="form-line focused">
-                            <input type="number" name="total_amount" value="{{ old('name',$safe->total_amount) }}" id="total_amount" class="form-control">
+                            <input type="number" step=".01" name="total_amount" value="{{ old('name',$safe->total_amount) }}" id="total_amount" class="form-control">
                             <label class="form-label">{{ __("website.column_total_amount") }}</label>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                     {{-- END hidden inputs --}}
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="number" name="transaction_amount" value="{{ old('transaction_amount') }}" id="transaction_amount" class="form-control">
+                            <input type="number" step=".01" name="transaction_amount" value="{{ old('transaction_amount') }}" id="transaction_amount" class="form-control">
                             <label class="form-label">{{ __("website.column_transaction_amount") }}</label>
                         </div>
                     </div>

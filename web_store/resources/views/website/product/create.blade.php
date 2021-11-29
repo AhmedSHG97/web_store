@@ -44,13 +44,13 @@
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="number" name="cost_price" value="{{ old('cost_price') }}" min="0" id="cost_price" class="form-control">
+                            <input type="number" step=".01" name="cost_price" value="{{ old('cost_price') }}" min="0" id="cost_price" class="form-control">
                             <label class="form-label">{{ __("website.text_cost_price") }}</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="number" name="sales_price" value="{{ old('sales_price') }}" min="0" id="sales_price" class="form-control">
+                            <input type="number" name="sales_price" step=".01" value="{{ old('sales_price') }}" min="0" id="sales_price" class="form-control">
                             <label class="form-label">{{ __("website.text_sales_price") }}</label>
                         </div>
                     </div>

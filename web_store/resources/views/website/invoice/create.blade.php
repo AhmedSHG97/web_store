@@ -117,13 +117,13 @@
                     <input type="hidden" id="total_quantity" name = "total_quantity" value="">
                     <div class="form-group form-float">
                         <div class="form-line focused">
-                            <input type="number" name="sales_price" value="{{ old('sales_price') }}" id="sales_price" class="form-control">
+                            <input type="number" name="sales_price" value="{{ old('sales_price') }}" step=".01" id="sales_price" class="form-control">
                             <label class="form-label">{{ __("website.column_sale_price") }}</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line focused">
-                            <input type="number" name="quantity" value="{{ old('quantity') }}" id="quantity" class="form-control">
+                            <input type="number" name="quantity"  value="{{ old('quantity') }}" id="quantity" class="form-control">
                             <label class="form-label">{{ __("website.column_quantity") }}</label>
                         </div>
                     </div>

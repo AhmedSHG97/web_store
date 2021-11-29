@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="form-line focused">
-                            <input type="number" name="total_amount" value="{{ old('total_amount') }}" id="total_amount" class="form-control">
+                            <input type="number" name="total_amount" step=".01" value="{{ old('total_amount') }}" id="total_amount" class="form-control">
                             <label class="form-label">{{ __("website.column_total_amount") }}</label>
                         </div>
                     </div>
