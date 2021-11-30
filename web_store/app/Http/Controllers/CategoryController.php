@@ -78,6 +78,7 @@ class CategoryController extends Controller
         }
         $category = $this->repository->getById($request->id);
         if ($request->has('image')) {
+            if($category->image != 'uploads/product/placeholder.png')
             File::delete($category->image);
             $image = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/category'), $image);
@@ -94,6 +95,7 @@ class CategoryController extends Controller
     public function delete(Request $request)
     {
         $category = $this->repository->getById($request->id);
+        if($category->image != 'uploads/product/placeholder.png')
         File::delete($category->image);
         $this->repository->deleteById($request->id);
         $categories = $this->repository->all();

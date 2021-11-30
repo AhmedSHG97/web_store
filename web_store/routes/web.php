@@ -67,6 +67,7 @@ Route::middleware([Authentication::class])->group(function () {
     Route::post("/product/update",[ProductController::class,"update"])->name("updateProduct");
     Route::post("/product/delete",[ProductController::class,"delete"])->name("deleteProduct");
     Route::post("/product/filter",[ProductController::class,"productsFilter"])->name("productsFilter");
+    Route::post("/product/store/excel",[ProductController::class,"storeExcel"])->name("storeExcel");
     /* END Product routes */
 
     /* Safe routes */

@@ -1,69 +1,105 @@
 @role('show-products')
-@extends("website.index")
-@section("content")
-<div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-            <div class="header">
-                <h2>
-                    {{ __("website.my_products") }}
-                </h2>
-                <center>
-                    <form action="" method="get">
-                        {{ csrf_field() }}    
-                        <input type="number" name="to" placeholder="{{ __('website.to') }}" required>
-                        <input type="number" name="from" placeholder="{{ __('website.from') }}" required>
-                        <button type="submit" class="btn btn-primary">{{ __('website.filter_by_quantity') }}</button>
-                    </form>
-                </center>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ url("product/create") }}">{{ __("website.create") }}</a></li>
+    @extends("website.index")
+    @section('content')
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            {{ __('website.my_products') }}
+                        </h2>
+                        <center>
+                            <form action="" method="get">
+                                {{ csrf_field() }}
+                                <input type="number" name="to" placeholder="{{ __('website.to') }}" required>
+                                <input type="number" name="from" placeholder="{{ __('website.from') }}" required>
+                                <button type="submit" class="btn btn-primary">{{ __('website.filter_by_quantity') }}</button>
+                            </form>
+                        </center>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="{{ url('product/create') }}">{{ __('website.create') }}</a></li>
+                                    <li><a data-toggle="modal" data-target="#exampleModal" >ادخال المنتجات من ملف اكسل</a></li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped  table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('ID') }}</th>
+                                        <th>{{ __('website.column_name') }}</th>
+                                        <th>{{ __('website.column_cost_price') }}</th>
+                                        <th>{{ __('website.column_sale_price') }}</th>
+                                        <th>{{ __('website.column_quantity') }}</th>
+                                        <th>{{ __('website.column_inventories') }}</th>
+                                        <th>{{ __('website.column_category') }}</th>
+                                        <th>{{ __('website.column_image') }}</th>
+                                        <th>{{ __('website.cloumn_action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>{{ __('ID') }}</th>
+                                        <th>{{ __('website.column_name') }}</th>
+                                        <th>{{ __('website.column_cost_price') }}</th>
+                                        <th>{{ __('website.column_sale_price') }}</th>
+                                        <th>{{ __('website.column_quantity') }}</th>
+                                        <th>{{ __('website.column_inventories') }}</th>
+                                        <th>{{ __('website.column_image') }}</th>
+                                        <th>{{ __('website.column_category') }}</th>
+                                        <th>{{ __('website.cloumn_action') }}</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="work-table">
+                                    @include('website.product.components.table',['products' => $products])
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="body">
-                <div class="table-responsive" >
-                    <table class="table table-bordered table-striped  table-hover dataTable js-exportable" >
-                        <thead>
-                            <tr>
-                                <th>{{__("ID")}}</th>
-                                <th>{{__("website.column_name")}}</th>
-                                <th>{{__("website.column_cost_price")}}</th>
-                                <th>{{__("website.column_sale_price")}}</th>
-                                <th>{{__("website.column_quantity")}}</th>
-                                <th>{{__("website.column_inventories")}}</th>
-                                <th>{{__("website.column_category")}}</th>
-                                <th>{{__("website.column_image")}}</th>
-                                <th>{{__("website.cloumn_action")}}</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>{{__("ID")}}</th>
-                                <th>{{__("website.column_name")}}</th>
-                                <th>{{__("website.column_cost_price")}}</th>
-                                <th>{{__("website.column_sale_price")}}</th>
-                                <th>{{__("website.column_quantity")}}</th>
-                                <th>{{__("website.column_inventories")}}</th>
-                                <th>{{__("website.column_image")}}</th>
-                                <th>{{__("website.column_category")}}</th>
-                                <th>{{__("website.cloumn_action")}}</th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="work-table">
-                            @include('website.product.components.table',['products' => $products])
-                        </tbody>
-                    </table>
+        </div>
+    @endSection
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('اختار ملف الاكسل') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('storeExcel') }}" method="POST" id="transaction-form"
+                        enctype="multipart/form-data">
+                        {{-- hidden inputs --}}
+                        {{ csrf_field() }}
+                        {{-- END hidden inputs --}}
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <input type="file" name="products_file" id="transaction_reason" class="form-control">
+                                <label class="form-label">{{ __('ملف الاكسل') }}</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{{ __('website.close') }}</button>
+                    <button type="submit" form="transaction-form"
+                        class="btn btn-primary">{{ __('website.create') }}</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endSection
 @endrole

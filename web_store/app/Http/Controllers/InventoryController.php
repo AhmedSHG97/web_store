@@ -79,6 +79,7 @@ class InventoryController extends Controller
         }
         $inventory = $this->repository->getById($request->id);
         if ($request->has('image')) {
+            if($inventory->image != 'uploads/product/placeholder.png')
             File::delete($inventory->image);
             $image = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/inventory'), $image);
@@ -94,6 +95,7 @@ class InventoryController extends Controller
     public function delete(Request $request)
     {
         $inventory = $this->repository->getById($request->id);
+        if($inventory->image != 'uploads/product/placeholder.png')
         File::delete($inventory->image);
         $this->repository->deleteById($request->id);
         $inventories = $this->repository->all();

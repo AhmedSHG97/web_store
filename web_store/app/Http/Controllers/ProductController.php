@@ -7,16 +7,21 @@ use App\Http\Requests\ProductRequest;
 use App\Repositories\Inventory\InventoryRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\File;
+use App\Http\Helpers\SimpleXLSX;
+use Exception;
+
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function __construct(ProductRepositoryInterface $productRepository, InventoryRepositoryInterface $inventoryRepository, CategoryRepositoryInterface $categoryRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, InventoryRepositoryInterface $inventoryRepository, CategoryRepositoryInterface $categoryRepository, SimpleXLSX $xlsx)
     {
         $this->repository = $productRepository;
         $this->inventoryRepository = $inventoryRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->xlsx = $xlsx;
     }
 
     public function all(Request $request)
@@ -62,17 +67,17 @@ class ProductController extends Controller
         }
         $coutner = 0;
         foreach ($request->inventories as $inventory) {
-            if($inventory == null){
-                $coutner ++;
+            if ($inventory == null) {
+                $coutner++;
             }
         }
         if (count($request->inventories) == $coutner) {
             return redirect()->back()->withErrors(['message' => __("يجب اضافة الكميات في المخازن")])->withInput();
         }
-        if(isset($request->image)){
+        if (isset($request->image)) {
             $image = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/product'), $image);
-        }else{
+        } else {
             $image = 'placeholder.png';
         }
         $product = $this->repository->create(array_merge($request->except('image', 'inventories'), ['image' => "uploads/product/" . $image]));
@@ -108,8 +113,8 @@ class ProductController extends Controller
         }
         $coutner = 0;
         foreach ($request->inventories as $inventory) {
-            if($inventory == null){
-                $coutner ++;
+            if ($inventory == null) {
+                $coutner++;
             }
         }
         if (count($request->inventories) == $coutner) {
@@ -117,6 +122,7 @@ class ProductController extends Controller
         }
         $product = $this->repository->getById($request->id);
         if ($request->has('image')) {
+            if($product->image != 'uploads/product/placeholder.png')
             File::delete($product->image);
             $image = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/product'), $image);
@@ -136,10 +142,115 @@ class ProductController extends Controller
     public function delete(Request $request)
     {
         $product = $this->repository->getById($request->id);
+        if($product->image != 'uploads/product/placeholder.png')
         File::delete($product->image);
         $this->repository->deleteById($request->id);
         $products = $this->repository->all();
         return view("website.product.components.table")->with(['products' => $products]);
+    }
+    public function storeExcel(Request $request)
+    {
+        $request->validate(['products_file' => "required|mimes:xlsx"]);
+        $file = $request->file('products_file');
+        $excel = $this->xlsx::parse($file->getPathName());
+        $file_columns = ['name', 'image', 'description', 'category', 'cost price', 'sales price', 'quantity'];
+        $sheet_2_file_columns = ['name', 'inventory', 'quantity'];
+        $i = 0;
+        DB::beginTransaction();
+        try{
+            for ($sheet = 0; $sheet < sizeof($excel->sheetNames()); $sheet++) {
+                foreach ($excel->rows($sheet) as $key => $row) {
+                    if ($i != 0) {
+                        if ($sheet == 0) {
+                            if (!is_numeric((int)$row[5])) {
+                                return redirect()->back()->withErrors(['message' => __("يجب ان تكون الكمية رقما")]);
+                            }
+                            $category = $this->categoryRepository->where('name', $row[2])->get()->first();
+                            $product_info = $this->repository->where('name', trim($row[0]))->get()->first();
+                            if ($category) {
+                                $category_id = $category->id;
+                            } else {
+                                $category = $this->categoryRepository->create(['name' => $row[2], 'image' => "uploads/product/placeholder.png"]);
+                                $category_id = $category->id;
+                            }
+                            if ($product_info) {
+                                $product_info->increment('quantity', (int)$row[5]);
+                                $product_info->save();
+                                echo "<br>" . $product_info->name . " تم تعديل الكمية للمنتج";
+                            } else {
+                                $product = [
+                                    'name' => $row[0] ? trim($row[0]) : "product" . $i,
+                                    'image' => "uploads/product/placeholder.png",
+                                    'description' => $row[1] ? $row[1] : "product" . $i,
+                                    'category_id' => $category_id,
+                                    'cost_price' => $row[3],
+                                    'sales_price' => $row[4],
+                                    'quantity' => $row[5],
+                                ];
+                                $product_added = $this->repository->create($product);
+                                echo "<br>" . $product_added->name . " تم الانشاء للمنتج";
+                            }
+                        }elseif($sheet == 1){
+                            if (!is_numeric((int)$row[2])) {
+                                return redirect()->back()->withErrors(['message' => __("في الشيت الثاني يجب ان تكون الكمية رقما")]);
+                            }
+                            $product_info = $this->repository->where('name', trim($row[0]))->get()->first();
+                            $inventory = $this->inventoryRepository->where('name', $row[1])->get()->first();
+                            if ($inventory) {
+                                $inventory_id = $inventory->id;
+                            } else {
+                                $inventory = $this->inventoryRepository->create(['name' => $row[1],'address'=>'الأسكندرية' ,'image' => "uploads/product/placeholder.png"]);
+                                $inventory_id = $inventory->id;
+                            }
+                            if ($product_info) {
+                                $exists = DB::table('products_inventories')->where('inventory_id',$inventory_id)
+                                ->where('product_id',$product_info->id)->get()->first();
+                                if($exists){
+                                    DB::table('products_inventories')
+                                    ->where('inventory_id',$inventory_id)
+                                    ->where('product_id',$product_info->id)->increment('quantity',(int)$row[2]);
+                                }else{
+                                    DB::table('products_inventories')->insertGetId([
+                                        'product_id' => $product_info->id,
+                                        'inventory_id' => $inventory_id,
+                                        'quantity' => (int)$row[2],
+                                    ]);
+                                }
+                                echo "<br>" . $product_info->name . " تم تعديل الكمية في الفرع للمنتج";
+                                
+                            } 
+                            
+                        }
+                    } else {
+                        if($sheet == 0){
+                            foreach ($row as $key => $value) {
+                                if (!in_array($value, $file_columns)) {
+                                    DB::rollBack();
+                                    return redirect()->back()->withErrors(['message' => __($value . "  لا يجب ان يحتوي الملف على ")]);
+                                }
+                                
+                            }
+                        }elseif($sheet == 1){
+                            foreach ($row as $key => $value) {
+                                if (!in_array($value, $sheet_2_file_columns)) {
+                                    DB::rollBack();
+                                    return redirect()->back()->withErrors(['message' => __($value . "  لا يجب ان يحتوي الملف على ")]);
+                                }
+                            }
+                        }
+    
+                    }
+                    $i++; 
+                }
+                $i = 0;
+            }
+        }catch(Exception $exception){
+            DB::rollBack();
+            return redirect()->back()->withErrors(['message' =>$exception->getMessage()]);
+        }
+        
+        DB::commit();
+        return redirect()->back()->with(['success' => __("تم انشاء المنتجات بنجاح")]);
     }
     public function productsFilter(Request $request)
     {
