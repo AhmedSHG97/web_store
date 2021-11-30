@@ -30,7 +30,7 @@ class InventoryRequest extends FormRequest
     {
         if ($this->path() == 'inventory/store') {
             return [
-                'image' => "required|mimes:jpeg,png,jpg,gif,svg|max:2048",
+                'image' => "nullable|mimes:jpeg,png,jpg,gif,svg|max:2048",
                 'name' => "required|string|unique:inventories,name|min:3",
                 'address' => "required|string|min:4"
             ];

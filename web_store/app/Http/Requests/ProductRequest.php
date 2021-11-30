@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
     {
         if ($this->path() == 'product/store') {
             return [
-                'image' => "required|mimes:jpeg,png,jpg,gif,svg|max:2048",
+                'image' => "nullable|mimes:jpeg,png,jpg,gif,svg|max:2048",
                 'name' => "required|string|unique:products,name|min:3",
                 'description' => "required|string|min:4",
                 'category_id' => "required|integer|exists:categories,id",

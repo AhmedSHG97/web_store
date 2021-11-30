@@ -45,8 +45,12 @@ class InventoryController extends Controller
         if(session()->has('validation_message')){
             return redirect()->back()->withErrors(['message'=>session("validation_message")])->withInput();
         }
-        $image = time() . '.' . $request->image->extension();
+        if(isset($request->image)){
+            $image = time() . '.' . $request->image->extension();
         $request->image->move(public_path('uploads/inventory'), $image);
+        }else{
+            $image = 'placeholder.png';
+        }
         $this->repository->create(array_merge($request->except('image'),['image' => "uploads/inventory/" . $image]));
         return redirect()->back()->with(['success' => __("website.infor_inventory_created_success")]);
     }

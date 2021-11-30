@@ -43,8 +43,13 @@ class CategoryController extends Controller
         if(session()->has('validation_message')){
             return redirect()->back()->withErrors(['message'=>session("validation_message")])->withInput();
         }
-        $image = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('uploads/category'), $image);
+        if(isset($request->image)){
+            $image = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/category'), $image);
+        }else{
+            $image = 'placeholder.png';
+        }
+        
         $this->repository->create(array_merge($request->except('image'),['image' => "uploads/category/" . $image]));
         return redirect()->back()->with(['success' => __("website.info_category_created_success")]);
     }

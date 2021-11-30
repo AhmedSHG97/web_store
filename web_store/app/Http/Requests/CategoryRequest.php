@@ -30,7 +30,7 @@ class CategoryRequest extends FormRequest
     {
         if ($this->path() == 'category/store') {
             return [
-                'image' => "required|mimes:jpeg,png,jpg,gif,svg|max:2048",
+                'image' => "nullable|mimes:jpeg,png,jpg,gif,svg|max:2048",
                 'name' => "required|string|unique:categories,name|min:3",
             ];
         }

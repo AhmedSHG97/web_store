@@ -69,8 +69,12 @@ class ProductController extends Controller
         if (count($request->inventories) == $coutner) {
             return redirect()->back()->withErrors(['message' => __("يجب اضافة الكميات في المخازن")])->withInput();
         }
-        $image = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('uploads/product'), $image);
+        if(isset($request->image)){
+            $image = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/product'), $image);
+        }else{
+            $image = 'placeholder.png';
+        }
         $product = $this->repository->create(array_merge($request->except('image', 'inventories'), ['image' => "uploads/product/" . $image]));
         if ($request->has('inventories')) {
             $this->repository->assignInventories($product, $request->inventories);
