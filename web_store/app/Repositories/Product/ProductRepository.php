@@ -35,4 +35,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         
         return $product;
     }
+    public function getTotalCostPrice(){
+        return Product::select(DB::raw('sum(cost_price * quantity) as total'))->first()->total;
+    }
+
+    public function getTotalSalesPrice(){
+        return Product::select(DB::raw('sum(sales_price * quantity) as total'))->first()->total;
+    }
+    
+
 }

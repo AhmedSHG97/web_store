@@ -40,6 +40,39 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-cyan hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">attach_money</i>
+                </div>
+                <div class="content">
+                    <div class="text">مجموع سعر البيع لكل المنتجات</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $productsTotalSalesPrice  }}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-cyan hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">attach_money</i>
+                </div>
+                <div class="content">
+                    <div class="text">مجموع سعر التكلفة لكل المنتجات</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $productsTotalCostPrice }}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-cyan hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">attach_money</i>
+                </div>
+                <div class="content">
+                    <div class="text">صافي الربح المتوقع</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $productsTotalSalesPrice - $productsTotalCostPrice }}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
         @foreach ( $inventories as $inventory )
         <a href = "{{ url('inventory/edit/'.$inventory->id) }}">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
