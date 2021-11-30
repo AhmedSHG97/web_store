@@ -34,6 +34,7 @@ class SafeTransactionRequest extends FormRequest
                 'safe_id' => "required|exists:safes,id|integer|min:1",
                 'transaction_type' => "required|string|in:withdraw,deposit",
                 'transaction_amount' => "required|numeric|min:0",
+                'transaction_reason' => "required|string|min:3",
             ];
         }
     }
@@ -51,6 +52,8 @@ class SafeTransactionRequest extends FormRequest
             "transaction_type.in" => __("website.transaction_type_in"),
             "transaction_amount.required" => __("website.transaction_amount_required"),
             "transaction_amount.min" => __("website.transaction_amount_min"),
+            "transaction_reason.required" => __("سبب التحويل مطلوب"),
+            "transaction_reason.min" => __("سبب التحويل يجب ان يكون  اكبر من 2 حرف"),
         ];
     }
     protected function failedAuthorization()

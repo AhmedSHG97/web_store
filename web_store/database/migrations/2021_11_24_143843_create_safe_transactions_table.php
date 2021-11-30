@@ -18,6 +18,7 @@ class CreateSafeTransactionsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete("cascade");
             $table->foreignId('safe_id')->constrained()->onDelete("cascade");
             $table->double('transaction_amount');
+            $table->text('transaction_reason');
             $table->double('safe_credit');
             $table->enum("transaction_type",['withdraw','deposit']);
             $table->timestamps();

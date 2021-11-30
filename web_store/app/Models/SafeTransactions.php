@@ -16,6 +16,7 @@ class SafeTransactions extends Model
         "safe_id",
         "transaction_amount",
         "transaction_type",
+        "transaction_reason",
         "safe_credit",
     ];
     public function safe(){
