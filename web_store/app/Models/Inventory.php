@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Inventory extends Model
 {
@@ -21,8 +22,10 @@ class Inventory extends Model
     public function getCreditAttribute(){
         $products =  $this->products;
         $credit = 0;
-        foreach ($products as $product){
-            $credit+= $product->cost_price * $product->quantity;
+        foreach ($products as $key => $product){
+            $quantity = DB::table('products_inventories')->where('product_id',$product->id)->where('inventory_id',$this->id)->first()->quantity;
+            
+            $credit+= $product->cost_price * $quantity;
         }
         return $credit;
     }
